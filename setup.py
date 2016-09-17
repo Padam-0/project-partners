@@ -7,13 +7,13 @@ config = {
     'description': 'Allocate project partners based on diversity',
     'author': 'Peter Adam',
     'url': 'https://github.com/Padam-0/project-partners',
-    'download_url': 'Where to download it.',
-    'author_email': 'peter.adam02@gmail.com',
+    'download_url': 'https://github.com/Padam-0/project-partners',
+    'author_email': 'peter.adam@ucdconnect.ie',
     'version': '0.1',
     'install_requires': ['nose'],
-    'packages': ['NAME'],
+    'packages': ['projpartners'],
     'scripts': [],
-    'name': 'projectname'
+    'name': 'Project Partners'
 }
 
 setup(**config)
