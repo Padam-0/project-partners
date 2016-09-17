@@ -25,10 +25,16 @@ def openfile(file):
     Industry Experience (Y/N)
     (if Y) Industry (single word)
 
+    TO DO:
+        test if file exists
+        test if file has required .txt extension
+        return errors if failure
+
     :param file:
     :return:
     """
     li = []
+    # what if file doesn't exist?
     f = open(file, 'r')
     for line in f:
         li.append((line.rstrip()).split(' '))
@@ -51,10 +57,53 @@ def previous_partners():
     return previous_partners
 
 
+def getfilename(filename):
+    """
+    Takes a filename as input, tests if it is a path (by searching for /) and
+    if so, removes all information prior to the filename. Tests if the file
+    extension .txt is present, if not, appends it.
+
+    :param filename:
+    :return:
+    """
+    c = filename.count('/')
+    if c != 0:
+        i = filename.replace('/', '|', c - 1).find('/')
+        nf = filename[i+1:]
+        print(nf)
+    else:
+        nf = filename
+
+    if nf.endswith('.txt'):
+        li = ['../', nf]
+    else:
+        li = ['../', nf, '.txt']
+    return ''.join(li)
+
 def main():
-    student_info = openfile('../sample-input.txt')
+    """
+    # This will be used when talking to the user. For now, use a default
+    input_file = input("What is the name of the .txt file containing student "
+                       "information?")
+    student_info = openfile(getfilename(input_file))
+    """
+
+    student_info = openfile(getfilename('sample-input'))
+
+    """
+    # This will be used when talking to the user. For now, use a default
     if previous_partners() == 'Y':
-        prev_partners_info = openfile('../sample-pp.txt')
+        input_file1 = input(
+            "What is the name of the .txt file containing previous partner "
+            "information?")
+        prev_partners_info = openfile(getfilename(input_file1))
+    """
+
+    prev_partners_info = openfile(getfilename('sample-pp'))
+
+    print(student_info)
+    print(prev_partners_info)
+
     """
     if previous partners == required:
         open file ()

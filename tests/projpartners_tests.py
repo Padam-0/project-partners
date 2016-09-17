@@ -1,5 +1,5 @@
 from nose.tools import *
 from projpartners import *
 
-def first_test():
-    pass
+def test_getfilename():
+    assert_equal(getfilename())
