@@ -14,9 +14,11 @@ try:
     import sys
     import smtplib
     import getpass
+    import numpy as np
 except ImportError as import_err:
     print(import_err)
 
+criteria_list = ["CountryOfBirth", "UnderGrad", "IndustryExp", "Industry"]
 
 def openfile(file):
     """
@@ -103,6 +105,36 @@ def send_email(recipients, subject, message):
     server.sendmail(email_acc, recipients, content)
     server.quit()
 
+
+def create_criteria_matrix(s, criteria):
+    ci = criteria_list.index(criteria)
+    l = len(s)
+    M = np.zeros((l,l))
+    # create match data
+    for i in range(l):
+        for j in range(l):
+            if s[i][0] == s[j][0]:
+                M[i][j] += 0
+            else:
+                M[i][j] += 1
+    return M
+
+def create_pp_matrix(s, prevproj_information):
+    l = len(s)
+    M = np.zeros((l, l))
+    # create match data
+
+
+    M *= -1
+    return M
+
+def create_neye_matrix(student_information):
+    l = len(student_information)
+    M = np.eye(l)
+    M *= -1
+    return M
+
+
 def main():
     """
     # This will be used when talking to the user. For now, use a default
@@ -124,11 +156,22 @@ def main():
 
     prev_partners_info = openfile(getfilename('sample-pp'))
 
+    ["CountryOfBirth", "UnderGrad", "IndustryExp", "Industry"]
+
+    cbM = create_criteria_matrix(student_info, "CountryOfBirth")
+    ugM = create_criteria_matrix(student_info, "UnderGrad")
+    ieM = create_criteria_matrix(student_info, "IndustryExp")
+    inM = create_criteria_matrix(student_info, "Industry")
+    ppM = create_pp_matrix(student_info, prev_partners_info)
+    neM = create_neye_matrix(student_info)
+
+    frM = cbM + ugM + ieM + inM + ppM + neM
+    # print(frM)
+    print(student_info)
+    print(prev_partners_info)
+    print(cbM)
+
     """
-    if previous partners == required:
-        open file ()
-        import previous partners info ()
-        close file ()
     for i in criteria:
         create matching matrix of i
     create -1 identity matrix to remove self-matches
@@ -136,9 +179,8 @@ def main():
     combine previous partners matrix ((i * -1) - 1)
     disregard all negative results
     create optimal list ()
-    for i in teams:
-        email (i)
-    email (unit-coord)
+    """
+
     """
 
     unit_coordinator = input("Please enter the email prefix of the unit "
@@ -168,6 +210,9 @@ def main():
     uc_message = "Hi uc_name, ..."
     # need to include a table of teams in the email to UC
     send_email(unit_coordinator, uc_subject, uc_message)
+    """
+
+
 
 if __name__ == '__main__':
     main()

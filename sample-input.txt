@@ -1,2 +1,3 @@
 peter.adam Peter Adam Australia Engineering Y OaG
 andy.mcsweeney Andy McSweeney Ireland Engineering Y Consulting
+nicole.mcconville Nicole McConville Ireland Commerce N NA
