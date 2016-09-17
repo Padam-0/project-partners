@@ -94,7 +94,14 @@ def send_email(recipients, subject, message):
     :param recipients:
     :return:
     """
-
+    server = smtplib.SMTP('smtp.gmail.com', '587') # Connect to gmail
+    server.starttls()  # Starts TLS Encryption
+    email_acc = 'peter.adam@ucdconnect.ie'
+    password = getpass.getpass("Enter the password for %s" % (email_acc))
+    server.login(email_acc, password)
+    content = "Subject: " + subject + "\n" + message
+    server.sendmail(email_acc, recipients, content)
+    server.quit()
 
 def main():
     """
@@ -117,9 +124,6 @@ def main():
 
     prev_partners_info = openfile(getfilename('sample-pp'))
 
-    print(student_info)
-    print(prev_partners_info)
-
     """
     if previous partners == required:
         open file ()
@@ -137,13 +141,13 @@ def main():
     email (unit-coord)
     """
 
-    unit_coordinator = [input("Please enter the email prefix of the unit "
-                              "coordinator: ")]
+    unit_coordinator = input("Please enter the email prefix of the unit "
+                              "coordinator: ")
 
     # let teams output be a list of lists,
     # [[team_1_member_1,team_1_member_2],[team_2_member_1,...],...]
 
-    teams = [['peter.adam', 'andy.mcsweeney']]
+    teams = [['peter.adam', 'peter.adam']]
 
     for i in teams:
         team_subject = "Your team for ___ assignment"
@@ -155,12 +159,15 @@ def main():
                        "so if you have any issues, please email them at " \
                        + unit_coordinator + "@ucdconnect.ie\n\n#autodiverse " \
                        "wishes you a productive and diverse project experience!"
-        send_email(i, team_subject, team_message)
+        recipients = []
+        for recipient in i:
+            recipients.append(recipient + "@ucdconnect.ie")
+        send_email(recipients, team_subject, team_message)
 
     uc_subject = "Teams for __ assignment"
     uc_message = "Hi uc_name, ..."
+    # need to include a table of teams in the email to UC
     send_email(unit_coordinator, uc_subject, uc_message)
-
 
 if __name__ == '__main__':
     main()
