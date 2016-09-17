@@ -86,8 +86,14 @@ def getfilename(filename):
     return ''.join(li)
 
 
-def send_email(receipients):
+def send_email(recipients, subject, message):
+    """
+    Takes a list of recipients and emails them with a specific subject and
+    message.
 
+    :param recipients:
+    :return:
+    """
 
 
 def main():
@@ -131,15 +137,29 @@ def main():
     email (unit-coord)
     """
 
+    unit_coordinator = [input("Please enter the email prefix of the unit "
+                              "coordinator: ")]
+
     # let teams output be a list of lists,
     # [[team_1_member_1,team_1_member_2],[team_2_member_1,...],...]
 
-    for i in teams:
-        send_email(i)
+    teams = [['peter.adam', 'andy.mcsweeney']]
 
-    unit_coordinator = input("Please enter the email prefix of the unit "
-                             "coordinator: ")
-    send_email(unit_coordinator)
+    for i in teams:
+        team_subject = "Your team for ___ assignment"
+        team_message = "Hi tm1.name & tm2.name,\n\nYou have been grouped " \
+                       "together for this assignment by #autodiverse, " \
+                       "the robot that loves creating new, diverse project " \
+                       "teams!\n\nThe unit coordinator has been informed " \
+                       "that you will be working together for this task, " \
+                       "so if you have any issues, please email them at " \
+                       + unit_coordinator + "@ucdconnect.ie\n\n#autodiverse " \
+                       "wishes you a productive and diverse project experience!"
+        send_email(i, team_subject, team_message)
+
+    uc_subject = "Teams for __ assignment"
+    uc_message = "Hi uc_name, ..."
+    send_email(unit_coordinator, uc_subject, uc_message)
 
 
 if __name__ == '__main__':
