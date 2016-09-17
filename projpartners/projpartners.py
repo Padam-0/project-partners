@@ -10,7 +10,12 @@ Want to:
 8. Send an email out to unit coordinator informing them
 
 """
-import sys
+try:
+    import sys
+    import smtplib
+    import getpass
+except ImportError as import_err:
+    print(import_err)
 
 
 def openfile(file):
@@ -80,6 +85,11 @@ def getfilename(filename):
         li = ['../', nf, '.txt']
     return ''.join(li)
 
+
+def send_email(receipients):
+
+
+
 def main():
     """
     # This will be used when talking to the user. For now, use a default
@@ -120,6 +130,16 @@ def main():
         email (i)
     email (unit-coord)
     """
+
+    # let teams output be a list of lists,
+    # [[team_1_member_1,team_1_member_2],[team_2_member_1,...],...]
+
+    for i in teams:
+        send_email(i)
+
+    unit_coordinator = input("Please enter the email prefix of the unit "
+                             "coordinator: ")
+    send_email(unit_coordinator)
 
 
 if __name__ == '__main__':
