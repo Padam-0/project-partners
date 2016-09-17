@@ -10,6 +10,8 @@ Want to:
 8. Send an email out to unit coordinator informing them
 
 """
+import sys
+
 
 def openfile(file):
     """
@@ -29,16 +31,31 @@ def openfile(file):
     li = []
     f = open(file, 'r')
     for line in f:
-        li.append(line)
+        li.append((line.rstrip()).split(' '))
     f.close()
     return li
 
-def main():
 
+def previous_partners():
+    previous_partners = input("Is there relevant information about"
+                                  "previous project partners? (Y/N):  ").upper()
+    while previous_partners != 'Y' and previous_partners != 'N':
+        previous_partners = input("That is not a valid response. "
+                                  "Please use Y or N to indicate if "
+                                  "you would like to include "
+                                  "information about previous project "
+                                  "partners.\nAlternatively, "
+                                  "enter Q to exit:  ").upper()
+        if previous_partners == 'Q':
+            sys.exit()
+    return previous_partners
+
+
+def main():
+    student_info = openfile('../sample-input.txt')
+    if previous_partners() == 'Y':
+        prev_partners_info = openfile('../sample-pp.txt')
     """
-    open file ()
-    import student info ()
-    close file ()
     if previous partners == required:
         open file ()
         import previous partners info ()
@@ -54,6 +71,7 @@ def main():
         email (i)
     email (unit-coord)
     """
+
 
 if __name__ == '__main__':
     main()
