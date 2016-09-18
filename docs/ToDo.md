@@ -21,3 +21,4 @@ solution, then merge back into master when finished.
     work on windows and unix - Done 18-09-16  
 * Write unit tests for all functions - Done 18-09-16  
 * Rewrite openfile() to check for bad filenames - Done 18-09-16  
+* Comments in projpartners.py - Done 18-09-16
