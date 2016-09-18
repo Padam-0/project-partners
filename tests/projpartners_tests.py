@@ -2,6 +2,7 @@ from nose.tools import *
 from projpartners import projpartners
 import numpy.testing
 import numpy as np
+import os
 
 """
 def test_openfile(file):
@@ -27,35 +28,20 @@ def test_previous_partners():
         if previous_partners == 'Q':
             sys.exit()
     return previous_partners
-
-
-def test_getfilename(filename):
-
-    c = filename.count('/')
-    if c != 0:
-        i = filename.replace('/', '|', c - 1).find('/')
-        nf = filename[i+1:]
-        print(nf)
-    else:
-        nf = filename
-
-    if nf.endswith('.txt'):
-        li = ['../', nf]
-    else:
-        li = ['../', nf, '.txt']
-    return ''.join(li)
-
-
-def test_send_email(recipients, subject, message):
-    server = smtplib.SMTP('smtp.gmail.com', '587') # Connect to gmail
-    server.starttls()  # Starts TLS Encryption
-    email_acc = 'peter.adam@ucdconnect.ie'
-    password = getpass.getpass("Enter the password for %s" % (email_acc))
-    server.login(email_acc, password)
-    content = "Subject: " + subject + "\n" + message
-    server.sendmail(email_acc, recipients, content)
-    server.quit()
 """
+
+def test_getfilename():
+    a = '../test.txt'
+    b = '/Users/Padams/Documents/Programming/Python/projects/projpartners/test'
+    c = 'test.ext'
+
+    res0 = projpartners.getfilename(a)
+    res1 = projpartners.getfilename(b)
+    res2 = projpartners.getfilename(c)
+
+    assert_equal(res0, os.path.join('..','test.txt'))
+    assert_equal(res1, os.path.join('..','test.txt'))
+    assert_equal(res2, os.path.join('..','test.txt'))
 
 def test_create_criteria_matrix():
     s = [['peter.adam', 'Peter', 'Adam', 'Australia', 'Engineering', 'Y',
