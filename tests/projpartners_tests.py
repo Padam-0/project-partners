@@ -78,21 +78,6 @@ def test_create_neye_matrix():
     res2 = projpartners.create_neye_matrix([1, 2])
     numpy.testing.assert_array_equal(res2, [[-1, -0],[-0, -1]])
 
-"""
-def previous_partners():
-    previous_partners = input("Is there relevant information about "
-                                  "previous project partners? (Y/N):  ").upper()
-    while previous_partners != 'Y' and previous_partners != 'N':
-        previous_partners = input("That is not a valid response. "
-                                  "Please use Y or N to indicate if "
-                                  "you would like to include "
-                                  "information about previous project "
-                                  "partners.\nAlternatively, "
-                                  "enter Q to exit:  ").upper()
-        if previous_partners == 'Q':
-            sys.exit()
-    return previous_partners
-"""
 
 def test_find_member_name():
     s = [['peter.adam', 'Peter', 'Adam', 'Australia', 'Engineering', 'Y',

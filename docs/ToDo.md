@@ -8,7 +8,6 @@ solution, then merge back into master when finished.
 * Write docstrings and comments for code  
     - Update README with function and module descriptions  
     - Copy docstrings for functions and modules from ^  
-* Write test for find_member_name()
 * Fix find_member_name() to return something if name not found
 * Go through input models looking for possible breakpoints  
 * Unit coordinator email content (table of teams)
