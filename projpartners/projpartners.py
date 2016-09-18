@@ -11,32 +11,18 @@ except ImportError as import_err:
 criteria_list = ["CountryOfBirth", "UnderGrad", "IndustryExp", "Industry"]
 
 def openfile(file):
-    """
-    Opens a .txt file containing line with student information. Each line
-    should contain in this order:
-    Email prefix
-    First name
-    Last name
-    Country of Birth
-    Undergraduate Qualification (single word)
-    Industry Experience (Y/N)
-    (if Y) Industry (single word)
-
-    TO DO:
-        test if file exists
-        test if file has required .txt extension
-        return errors if failure
-
-    :param file:
-    :return:
-    """
     li = []
-    # what if file doesn't exist?
-    f = open(file, 'r')
-    for line in f:
-        li.append((line.rstrip()).split(' '))
-    f.close()
-    return li
+    # test ends with .txt
+
+
+    try:
+        f = open(file, 'r')
+        for line in f:
+            li.append((line.rstrip()).split(' '))
+        f.close()
+        return li
+    except:
+        print("I can't file a file with that name")
 
 
 def previous_partners():

@@ -4,31 +4,21 @@ import numpy.testing
 import numpy as np
 import os
 
-"""
-def test_openfile(file):
-    li = []
-    # what if file doesn't exist?
-    f = open(file, 'r')
-    for line in f:
-        li.append((line.rstrip()).split(' '))
-    f.close()
-    return li
+def test_openfile():
+    a = 'sample-pp-test.txt'
+    b = 'sample-pp-test'
+    c = '/sample-pp-test.txt'
+    d = '../sample-pp-test.txt'
 
+    res1 = projpartners.openfile(projpartners.getfilename(a)[3:])
+    res2 = projpartners.openfile(projpartners.getfilename(b)[3:])
+    res3 = projpartners.openfile(projpartners.getfilename(c)[3:])
+    res4 = projpartners.openfile(projpartners.getfilename(d)[3:])
 
-def test_previous_partners():
-    previous_partners = input("Is there relevant information about"
-                                  "previous project partners? (Y/N):  ").upper()
-    while previous_partners != 'Y' and previous_partners != 'N':
-        previous_partners = input("That is not a valid response. "
-                                  "Please use Y or N to indicate if "
-                                  "you would like to include "
-                                  "information about previous project "
-                                  "partners.\nAlternatively, "
-                                  "enter Q to exit:  ").upper()
-        if previous_partners == 'Q':
-            sys.exit()
-    return previous_partners
-"""
+    assert_equal(res1, [['peter.adam', 'andy.mcsweeney']])
+    assert_equal(res2, [['peter.adam', 'andy.mcsweeney']])
+    assert_equal(res3, [['peter.adam', 'andy.mcsweeney']])
+    assert_equal(res4, [['peter.adam', 'andy.mcsweeney']])
 
 def test_getfilename():
     a = '../test.txt'
@@ -36,12 +26,12 @@ def test_getfilename():
     c = 'test.ext'
 
     res0 = projpartners.getfilename(a)
-    #res1 = projpartners.getfilename(b)
-    #res2 = projpartners.getfilename(c)
+    res1 = projpartners.getfilename(b)
+    res2 = projpartners.getfilename(c)
 
     assert_equal(res0, os.path.join('..','test.txt'))
-    #assert_equal(res1, os.path.join('..','test.txt'))
-    #assert_equal(res2, os.path.join('..','test.txt'))
+    assert_equal(res1, os.path.join('..','test.txt'))
+    assert_equal(res2, os.path.join('..','test.txt'))
 
 def test_create_criteria_matrix():
     s = [['peter.adam', 'Peter', 'Adam', 'Australia', 'Engineering', 'Y',
