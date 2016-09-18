@@ -12,9 +12,6 @@ criteria_list = ["CountryOfBirth", "UnderGrad", "IndustryExp", "Industry"]
 
 def openfile(file):
     li = []
-    # test ends with .txt
-
-
     try:
         f = open(file, 'r')
         for line in f:
@@ -22,11 +19,16 @@ def openfile(file):
         f.close()
         return li
     except:
-        print("I can't file a file with that name")
+        o = input("I can't find a file with that name. If you want to quit, "
+              "please press Q, if not, please try again:  ").upper()
+        if o == 'Q':
+            exit(0)
+        else:
+            openfile(getfilename(o.lower()))
 
 
 def previous_partners():
-    previous_partners = input("Is there relevant information about"
+    previous_partners = input("Is there relevant information about "
                                   "previous project partners? (Y/N):  ").upper()
     while previous_partners != 'Y' and previous_partners != 'N':
         previous_partners = input("That is not a valid response. "
@@ -135,31 +137,37 @@ def create_neye_matrix(student_information):
         M *= -1
         return M
     else:
-        return "Cannot calculate diversity with only one student"
+        print("Cannot calculate diversity with only one student")
         sys.exit(0)
 
 
+def find_member_name(name, student_list):
+    for i in student_list:
+        if name == i[0]:
+            first_name = i[1]
+            last_name = i[2]
+    # What if names can't be found?
+    return " ".join([first_name, last_name])
+
 def main():
-    """
+
     # This will be used when talking to the user. For now, use a default
     input_file = input("What is the name of the .txt file containing student "
-                       "information?")
+                       "information?  ")
     student_info = openfile(getfilename(input_file))
-    """
 
-    student_info = openfile(getfilename('sample-input'))
-    print(student_info)
-    """
+    #student_info = openfile(getfilename('sample-input'))
+
     # This will be used when talking to the user. For now, use a default
+    pp = 'N'
     if previous_partners() == 'Y':
         input_file1 = input(
             "What is the name of the .txt file containing previous partner "
-            "information?")
+            "information?  ")
         prev_partners_info = openfile(getfilename(input_file1))
-    """
+        pp = 'Y'
 
-    prev_partners_info = openfile(getfilename('sample-pp'))
-    print(prev_partners_info)
+    #prev_partners_info = openfile(getfilename('sample-pp'))
 
     cbM = create_criteria_matrix(student_info, "CountryOfBirth")
     ugM = create_criteria_matrix(student_info, "UnderGrad")
@@ -167,49 +175,49 @@ def main():
     inM = create_criteria_matrix(student_info, "Industry")
 
     frM = cbM + ugM + ieM + inM
-    print(frM)
-    ppM = create_pp_matrix(student_info, prev_partners_info, frM)
-    #print(ppM)
     neM = create_neye_matrix(student_info)
-
-    fM = ppM + neM
-    #print(fM)
+    if pp == 'Y':
+        ppM = create_pp_matrix(student_info, prev_partners_info, frM)
+        fM = ppM + neM
+    else:
+        fM = frM + neM
+    print(fM)
 
     """
-    disregard all negative results
-    create optimal list ()
+    Matching Engine to go here
 
-    """
     """
 
     unit_coordinator = input("Please enter the email prefix of the unit "
                               "coordinator: ")
 
-    # let teams output be a list of lists,
-    # [[team_1_member_1,team_1_member_2],[team_2_member_1,...],...]
-
     teams = [['peter.adam', 'peter.adam']]
 
     for i in teams:
+        tm1 = find_member_name(i[0], student_info)
+        tm2 = find_member_name(i[1], student_info)
+
         team_subject = "Your team for ___ assignment"
-        team_message = "Hi tm1.name & tm2.name,\n\nYou have been grouped " \
-                       "together for this assignment by #autodiverse, " \
-                       "the robot that loves creating new, diverse project " \
-                       "teams!\n\nThe unit coordinator has been informed " \
-                       "that you will be working together for this task, " \
-                       "so if you have any issues, please email them at " \
-                       + unit_coordinator + "@ucdconnect.ie\n\n#autodiverse " \
-                       "wishes you a productive and diverse project experience!"
+        team_message = "Hi " + tm1 + " & " + tm2 + ",\n\n" \
+                       "You have been grouped together for this assignment by " \
+                       "#autodiverse, the robot that loves creating new, " \
+                       "diverse project teams!\n\nThe unit coordinator has " \
+                       "been informed that you will be working together for " \
+                       "this task, so if you have any issues, please email " \
+                       "them at "+ unit_coordinator + "@ucdconnect.ie\n\n" \
+                       "#autodiverse wishes you a productive and diverse " \
+                       "project experience!"
+
         recipients = []
         for recipient in i:
             recipients.append(recipient + "@ucdconnect.ie")
-        send_email(recipients, team_subject, team_message)
+        #send_email(recipients, team_subject, team_message)
+        print(team_message)
 
     uc_subject = "Teams for __ assignment"
     uc_message = "Hi uc_name, ..."
-    # need to include a table of teams in the email to UC
-    send_email(unit_coordinator, uc_subject, uc_message)
-    """
+
+    #send_email(unit_coordinator, uc_subject, uc_message)
 
 if __name__ == '__main__':
     main()
