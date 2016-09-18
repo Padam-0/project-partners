@@ -12,7 +12,7 @@ solution, then merge back into master when finished.
 * Email inputs  
 
 # In progress:  
-* Rewrite openfile() to check for bad filenames - Peter
+* Rewrite openfile() to check for bad filenames - Peter  
 * Write unit tests for openfile() - Peter  
 * Obscure password entry from command line - Peter  
 
