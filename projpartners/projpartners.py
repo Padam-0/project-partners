@@ -1,20 +1,7 @@
 """
-Want to:
-1. Import a list of information about students
-2. Import a list of previous project partners (optional)
-3. Create matrices based on matches of predefined criteria
-4. Remove all previous project partners from the list
-5. Sum matrices to create 'best' fit fo diversity (least matched criteria)
-6. Return list of partners
-7. Send an email out to each team informing them
-8. Send an email out to unit coordinator informing them
-
-To do:
-Write docstrings and comments for code
-Write unit tests
-Go through input models looking for possible breakpoints
 
 """
+
 try:
     import sys
     import smtplib
