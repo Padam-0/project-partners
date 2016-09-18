@@ -4,12 +4,6 @@ import numpy.testing
 import numpy as np
 
 """
-
-def test_getfilename():
-    assert_equal(getfilename())
-
-
-
 def test_openfile(file):
     li = []
     # what if file doesn't exist?
@@ -61,28 +55,23 @@ def test_send_email(recipients, subject, message):
     content = "Subject: " + subject + "\n" + message
     server.sendmail(email_acc, recipients, content)
     server.quit()
-
-
-def test_create_criteria_matrix(s, criteria):
-    ci = criteria_list.index(criteria) + 3
-    l = len(s)
-    M = np.zeros((l,l))
-    # create match data
-    for i in range(l):
-        for j in range(l):
-            if s[i][0] == s[j][0]:
-                M[i][j] += 0
-            elif s[i][ci] == s[j][ci]:
-                if ci == 6 and s[i][ci] == 'NA':
-                    # Necessary to not double count lack of industry experience
-                    M[i][j] += 0
-                else:
-                    M[i][j] += 1
-            else:
-                pass
-    return M
-
 """
+
+def test_create_criteria_matrix():
+    s = [['peter.adam', 'Peter', 'Adam', 'Australia', 'Engineering', 'Y',
+          'OaG'],
+         ['andy.mcsweeney', 'Andy', 'McSweeney', 'Ireland', 'Engineering',
+          'N', 'NA'],
+         ['nicole.mcconville', 'Nicole', 'McConville', 'Ireland', 'Commerce',
+          'N', 'NA']]
+    res0 = projpartners.create_criteria_matrix(s, "CountryOfBirth")
+    res1 = projpartners.create_criteria_matrix(s, "Industry")
+    res2 = projpartners.create_criteria_matrix(s, "UnderGrad")
+
+    numpy.testing.assert_array_equal(res0, [[0, 0, 0],[0, 0, 1],[0, 1, 0]])
+    numpy.testing.assert_array_equal(res1, [[0, 0, 0],[0, 0, 0],[0, 0, 0]])
+    numpy.testing.assert_array_equal(res2, [[0, 1, 0],[1, 0, 0],[0, 0, 0]])
+
 
 def test_create_pp_matrix():
     s = [['peter.adam', 'Peter', 'Adam', 'Australia', 'Engineering', 'Y',

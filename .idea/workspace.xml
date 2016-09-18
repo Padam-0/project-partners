@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3986d0d-1f40-4166-b7cd-10155382f2e0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projpartners/projpartners.py" afterPath="$PROJECT_DIR$/projpartners/projpartners.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/projpartners_tests.py" afterPath="$PROJECT_DIR$/tests/projpartners_tests.py" />
     </list>
     <ignored path="projpartners.iws" />
@@ -42,8 +41,8 @@
       <file leaf-file-name="projpartners_tests.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/projpartners_tests.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="98" column="49" selection-start-line="98" selection-start-column="49" selection-end-line="98" selection-end-column="49" />
+            <state relative-caret-position="195">
+              <caret line="69" column="4" selection-start-line="69" selection-start-column="4" selection-end-line="69" selection-end-column="4" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -54,7 +53,7 @@
       <file leaf-file-name="projpartners.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/projpartners/projpartners.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
+            <state relative-caret-position="1950">
               <caret line="130" column="21" selection-start-line="130" selection-start-column="21" selection-end-line="130" selection-end-column="21" />
               <folding />
             </state>
@@ -714,7 +713,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/projpartners/projpartners.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
+        <state relative-caret-position="1950">
           <caret line="130" column="21" selection-start-line="130" selection-start-column="21" selection-end-line="130" selection-end-column="21" />
           <folding />
         </state>
@@ -722,8 +721,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/projpartners_tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="98" column="49" selection-start-line="98" selection-start-column="49" selection-end-line="98" selection-end-column="49" />
+        <state relative-caret-position="195">
+          <caret line="69" column="4" selection-start-line="69" selection-start-column="4" selection-end-line="69" selection-end-column="4" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
