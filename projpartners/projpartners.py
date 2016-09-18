@@ -9,6 +9,11 @@ Want to:
 7. Send an email out to each team informing them
 8. Send an email out to unit coordinator informing them
 
+To do:
+Write docstrings and comments for code
+Write unit tests
+Go through input models looking for possible breakpoints
+
 """
 try:
     import sys
