@@ -1,5 +1,8 @@
 from nose.tools import *
-from projpartners import *
+from projpartners import projpartners
+import numpy.testing
+
+"""
 
 def test_getfilename():
     assert_equal(getfilename())
@@ -7,25 +10,6 @@ def test_getfilename():
 
 
 def test_openfile(file):
-    """
-    Opens a .txt file containing line with student information. Each line
-    should contain in this order:
-    Email prefix
-    First name
-    Last name
-    Country of Birth
-    Undergraduate Qualification (single word)
-    Industry Experience (Y/N)
-    (if Y) Industry (single word)
-
-    TO DO:
-        test if file exists
-        test if file has required .txt extension
-        return errors if failure
-
-    :param file:
-    :return:
-    """
     li = []
     # what if file doesn't exist?
     f = open(file, 'r')
@@ -51,14 +35,7 @@ def test_previous_partners():
 
 
 def test_getfilename(filename):
-    """
-    Takes a filename as input, tests if it is a path (by searching for /) and
-    if so, removes all information prior to the filename. Tests if the file
-    extension .txt is present, if not, appends it.
 
-    :param filename:
-    :return:
-    """
     c = filename.count('/')
     if c != 0:
         i = filename.replace('/', '|', c - 1).find('/')
@@ -75,13 +52,6 @@ def test_getfilename(filename):
 
 
 def test_send_email(recipients, subject, message):
-    """
-    Takes a list of recipients and emails them with a specific subject and
-    message.
-
-    :param recipients:
-    :return:
-    """
     server = smtplib.SMTP('smtp.gmail.com', '587') # Connect to gmail
     server.starttls()  # Starts TLS Encryption
     email_acc = 'peter.adam@ucdconnect.ie'
@@ -111,23 +81,39 @@ def test_create_criteria_matrix(s, criteria):
                 pass
     return M
 
-def test_create_pp_matrix(s, p, M):
-    l = len(s)
-    q = len(p)
-    # create match data
-    for i in range(q):
-        for j in range(l):
-            if p[i][0] == s[j][0]:
-                x = j
-            if p[i][1] == s[j][0]:
-                y = j
-    M[x,y] = M[x,y] * -1 - 1
-    M[y,x] = M[y,x] * -1 - 1
-    return M
+"""
 
-def test_create_neye_matrix(student_information):
+def test_create_pp_matrix():
+    s = [['peter.adam', 'Peter', 'Adam', 'Australia', 'Engineering', 'Y',
+           'OaG'],
+          ['andy.mcsweeney', 'Andy', 'McSweeney', 'Ireland', 'Engineering',
+           'Y', 'Consulting'],
+          ['nicole.mcconville', 'Nicole', 'McConville', 'Ireland', 'Commerce',
+           'Y', 'Accounting']]
+    p1 = [['peter.adam', 'andy.mcsweeney']]
+    p2 = [['peter.adam', 'nicole.mcconville'],['peter.adam', 'andy.mcsweeney']]
+    p3 = [['peter.adam', 'andy.mcsweeney'],['peter.adam', 'andy.mcsweeney']]
+    M1 = [[1, 2, 3],[1, 2, 3],[1, 2, 3]]
+    M2 = [[1, 2, 3],[1, 2, 3],[1, 2, 3]]
+    M3 = [[1, 2, 3],[1, 2, 3],[1, 2, 3]]
+    res0 = projpartners.create_pp_matrix(s, p1, M1)
+    res1 = projpartners.create_pp_matrix(s, p2, M2)
+    res2 = projpartners.create_pp_matrix(s, p3, M3)
 
-    l = len(student_information)
-    M = np.eye(l)
-    M *= -1
-    return M
+    #numpy.testing.assert_array_equal(res0, [[1, -3, 3],[-2, 2, 3],[1, 2, 3]])
+    #numpy.testing.assert_array_equal(res1, [[1, 2, -4],[1, 2, 3],[-2, 2, 3]])
+    #numpy.testing.assert_array_equal(res2, [[1, -4, 3],[-3, 2, 3],[1, 2, 3]])
+
+    print(projpartners.create_pp_matrix(s, p1, M1))
+
+test_create_pp_matrix()
+
+def test_create_neye_matrix():
+    res0 = projpartners.create_neye_matrix([])
+    res1 = projpartners.create_neye_matrix([1])
+    res2 = projpartners.create_neye_matrix([1, 2])
+    assert_equal(res0, "Cannot calculate diversity with only one "
+                              "student")
+    assert_equal(res1, "Cannot calculate diversity with only one "
+                              "student")
+    numpy.testing.assert_array_equal(res2, [[-1, -0],[-0, -1]])

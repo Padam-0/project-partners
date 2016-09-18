@@ -121,21 +121,28 @@ def create_pp_matrix(s, p, M):
     l = len(s)
     q = len(p)
     # create match data
+    x = 0
+    y = 0
     for i in range(q):
         for j in range(l):
             if p[i][0] == s[j][0]:
                 x = j
             if p[i][1] == s[j][0]:
                 y = j
-    M[x,y] = M[x,y] * -1 - 1
-    M[y,x] = M[y,x] * -1 - 1
+        if x > 0 or y > 0:
+            M[x,y] = abs(M[x,y]) * -1 - 1
+            M[y,x] = abs(M[y,x]) * -1 - 1
     return M
 
 def create_neye_matrix(student_information):
     l = len(student_information)
-    M = np.eye(l)
-    M *= -1
-    return M
+    if l > 1:
+        M = np.eye(l)
+        M *= -1
+        return M
+    else:
+        return "Cannot calculate diversity with only one student"
+        sys.exit(0)
 
 
 def main():
@@ -147,7 +154,7 @@ def main():
     """
 
     student_info = openfile(getfilename('sample-input'))
-
+    print(student_info)
     """
     # This will be used when talking to the user. For now, use a default
     if previous_partners() == 'Y':
@@ -158,6 +165,7 @@ def main():
     """
 
     prev_partners_info = openfile(getfilename('sample-pp'))
+    print(prev_partners_info)
 
     cbM = create_criteria_matrix(student_info, "CountryOfBirth")
     ugM = create_criteria_matrix(student_info, "UnderGrad")
@@ -167,10 +175,11 @@ def main():
     frM = cbM + ugM + ieM + inM
 
     ppM = create_pp_matrix(student_info, prev_partners_info, frM)
+    print(ppM)
     neM = create_neye_matrix(student_info)
 
     fM = ppM + neM
-    print(fM)
+    #print(fM)
 
     """
     disregard all negative results
