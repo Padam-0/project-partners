@@ -4,6 +4,7 @@ import numpy.testing
 import numpy as np
 import os
 
+
 def test_openfile():
     a = 'sample-pp-test.txt'
     b = 'sample-pp-test'
@@ -20,6 +21,7 @@ def test_openfile():
     assert_equal(res3, [['peter.adam', 'andy.mcsweeney']])
     assert_equal(res4, [['peter.adam', 'andy.mcsweeney']])
 
+
 def test_getfilename():
     a = '../test.txt'
     b = '/Users/Padams/Documents/Programming/Python/projects/projpartners/test'
@@ -32,6 +34,7 @@ def test_getfilename():
     assert_equal(res0, os.path.join('..','test.txt'))
     assert_equal(res1, os.path.join('..','test.txt'))
     assert_equal(res2, os.path.join('..','test.txt'))
+
 
 def test_create_criteria_matrix():
     s = [['peter.adam', 'Peter', 'Adam', 'Australia', 'Engineering', 'Y',
@@ -70,12 +73,38 @@ def test_create_pp_matrix():
     numpy.testing.assert_array_equal(res1, [[1, -3, -4],[-2, 2, 3],[-2, 2, 3]])
     numpy.testing.assert_array_equal(res2, [[1, -4, 3],[-3, 2, 3],[1, 2, 3]])
 
+
 def test_create_neye_matrix():
-    res0 = projpartners.create_neye_matrix([])
-    res1 = projpartners.create_neye_matrix([1])
     res2 = projpartners.create_neye_matrix([1, 2])
-    assert_equal(res0, "Cannot calculate diversity with only one "
-                              "student")
-    assert_equal(res1, "Cannot calculate diversity with only one "
-                              "student")
     numpy.testing.assert_array_equal(res2, [[-1, -0],[-0, -1]])
+
+"""
+def previous_partners():
+    previous_partners = input("Is there relevant information about "
+                                  "previous project partners? (Y/N):  ").upper()
+    while previous_partners != 'Y' and previous_partners != 'N':
+        previous_partners = input("That is not a valid response. "
+                                  "Please use Y or N to indicate if "
+                                  "you would like to include "
+                                  "information about previous project "
+                                  "partners.\nAlternatively, "
+                                  "enter Q to exit:  ").upper()
+        if previous_partners == 'Q':
+            sys.exit()
+    return previous_partners
+"""
+
+def test_find_member_name():
+    s = [['peter.adam', 'Peter', 'Adam', 'Australia', 'Engineering', 'Y',
+          'OaG'],
+         ['andy.mcsweeney', 'Andy', 'McSweeney', 'Ireland', 'Engineering',
+          'Y', 'Consulting'],
+         ['nicole.mcconville', 'Nicole', 'McConville', 'Ireland', 'Commerce',
+          'Y', 'Accounting']]
+    res0 = projpartners.find_member_name('peter.adam', s)
+    res1 = projpartners.find_member_name('andy.mcsweeney', s)
+    res2 = projpartners.find_member_name('nicole.mcconville', s)
+
+    assert_equal(res0, "Peter Adam")
+    assert_equal(res1, "Andy McSweeney")
+    assert_equal(res2, "Nicole McConville")
