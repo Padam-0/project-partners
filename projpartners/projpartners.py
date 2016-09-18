@@ -1,7 +1,3 @@
-"""
-
-"""
-
 try:
     import sys
     import smtplib
