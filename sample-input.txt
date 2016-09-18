@@ -1,6 +1,6 @@
 peter.adam Peter Adam Australia Engineering Y OaG
 andy.mcsweeney Andy McSweeney Ireland Engineering Y Consulting
-nicole.mcconville Nicole McConville Ireland Commerce N NA
+nicole.mcconville Nicole McConville Ireland Commerce Y Accounting
 christopher.taylor Chris Taylor Ireland CompSci N NA
 mark.doyle.4 Mark Doyle Ireland CompSci N NA
 eoin.carroll Eoin Carroll Ireland Engineering Y IT
