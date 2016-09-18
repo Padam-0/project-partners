@@ -7,6 +7,8 @@ try:
     import smtplib
     import getpass
     import numpy as np
+    import os
+    import re
 except ImportError as import_err:
     print(import_err)
 
@@ -65,19 +67,29 @@ def getfilename(filename):
     :param filename:
     :return:
     """
-    c = filename.count('/')
-    if c != 0:
-        i = filename.replace('/', '|', c - 1).find('/')
-        nf = filename[i+1:]
-        print(nf)
+    if os.path.join('a','b') == 'a/b':
+        #os is unix
+        c = filename.count('/')
+        if c != 0:
+            i = filename.replace('/', '|', c - 1).find('/')
+            nf = filename[i + 1:]
+        else:
+            nf = filename
     else:
-        nf = filename
+        #os is windows
+        c = filename.count('\\')
+        if c != 0:
+            i = filename.replace('\\', '|', c - 1).find('\\')
+            nf = filename[i + 1:]
+        else:
+            nf = filename
 
-    if nf.endswith('.txt'):
-        li = ['../', nf]
-    else:
-        li = ['../', nf, '.txt']
-    return ''.join(li)
+    pattern = re.compile(r'\..+$')
+    if re.search(pattern, nf) != None:
+        a = len(re.findall(pattern, nf)[0])
+        nf = nf[:-a]
+    nf += '.txt'
+    return os.path.join('..',nf)
 
 
 def send_email(recipients, subject, message):
