@@ -107,7 +107,7 @@ def send_email(recipients, subject, message):
 
 
 def create_criteria_matrix(s, criteria):
-    ci = criteria_list.index(criteria)
+    ci = criteria_list.index(criteria) + 3
     l = len(s)
     M = np.zeros((l,l))
     # create match data
@@ -115,17 +115,28 @@ def create_criteria_matrix(s, criteria):
         for j in range(l):
             if s[i][0] == s[j][0]:
                 M[i][j] += 0
+            elif s[i][ci] == s[j][ci]:
+                if ci == 6 and s[i][ci] == 'NA':
+                    # Necessary to not double count lack of industry experience
+                    M[i][j] += 0
+                else:
+                    M[i][j] += 1
             else:
-                M[i][j] += 1
+                pass
     return M
 
-def create_pp_matrix(s, prevproj_information):
+def create_pp_matrix(s, p, M):
     l = len(s)
-    M = np.zeros((l, l))
+    q = len(p)
     # create match data
-
-
-    M *= -1
+    for i in range(q):
+        for j in range(l):
+            if p[i][0] == s[j][0]:
+                x = j
+            if p[i][1] == s[j][0]:
+                y = j
+    M[x,y] = M[x,y] * -1 - 1
+    M[y,x] = M[y,x] * -1 - 1
     return M
 
 def create_neye_matrix(student_information):
@@ -156,31 +167,24 @@ def main():
 
     prev_partners_info = openfile(getfilename('sample-pp'))
 
-    ["CountryOfBirth", "UnderGrad", "IndustryExp", "Industry"]
-
     cbM = create_criteria_matrix(student_info, "CountryOfBirth")
     ugM = create_criteria_matrix(student_info, "UnderGrad")
     ieM = create_criteria_matrix(student_info, "IndustryExp")
     inM = create_criteria_matrix(student_info, "Industry")
-    ppM = create_pp_matrix(student_info, prev_partners_info)
+
+    frM = cbM + ugM + ieM + inM
+
+    ppM = create_pp_matrix(student_info, prev_partners_info, frM)
     neM = create_neye_matrix(student_info)
 
-    frM = cbM + ugM + ieM + inM + ppM + neM
-    # print(frM)
-    print(student_info)
-    print(prev_partners_info)
-    print(cbM)
+    fM = ppM + neM
+    print(fM)
 
     """
-    for i in criteria:
-        create matching matrix of i
-    create -1 identity matrix to remove self-matches
-    create -1 matrix for previous partners
-    combine previous partners matrix ((i * -1) - 1)
     disregard all negative results
     create optimal list ()
-    """
 
+    """
     """
 
     unit_coordinator = input("Please enter the email prefix of the unit "
@@ -211,8 +215,6 @@ def main():
     # need to include a table of teams in the email to UC
     send_email(unit_coordinator, uc_subject, uc_message)
     """
-
-
 
 if __name__ == '__main__':
     main()
