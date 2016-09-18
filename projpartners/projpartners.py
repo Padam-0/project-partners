@@ -173,9 +173,9 @@ def main():
     inM = create_criteria_matrix(student_info, "Industry")
 
     frM = cbM + ugM + ieM + inM
-
+    print(frM)
     ppM = create_pp_matrix(student_info, prev_partners_info, frM)
-    print(ppM)
+    #print(ppM)
     neM = create_neye_matrix(student_info)
 
     fM = ppM + neM

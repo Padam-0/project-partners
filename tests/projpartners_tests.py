@@ -1,6 +1,7 @@
 from nose.tools import *
 from projpartners import projpartners
 import numpy.testing
+import numpy as np
 
 """
 
@@ -93,20 +94,16 @@ def test_create_pp_matrix():
     p1 = [['peter.adam', 'andy.mcsweeney']]
     p2 = [['peter.adam', 'nicole.mcconville'],['peter.adam', 'andy.mcsweeney']]
     p3 = [['peter.adam', 'andy.mcsweeney'],['peter.adam', 'andy.mcsweeney']]
-    M1 = [[1, 2, 3],[1, 2, 3],[1, 2, 3]]
-    M2 = [[1, 2, 3],[1, 2, 3],[1, 2, 3]]
-    M3 = [[1, 2, 3],[1, 2, 3],[1, 2, 3]]
-    res0 = projpartners.create_pp_matrix(s, p1, M1)
-    res1 = projpartners.create_pp_matrix(s, p2, M2)
-    res2 = projpartners.create_pp_matrix(s, p3, M3)
+    M = np.array([[1, 2, 3],[1, 2, 3],[1, 2, 3]])
+    N = np.array([[1, 2, 3],[1, 2, 3],[1, 2, 3]])
+    O = np.array([[1, 2, 3],[1, 2, 3],[1, 2, 3]])
+    res0 = projpartners.create_pp_matrix(s, p1, M)
+    res1 = projpartners.create_pp_matrix(s, p2, N)
+    res2 = projpartners.create_pp_matrix(s, p3, O)
 
-    #numpy.testing.assert_array_equal(res0, [[1, -3, 3],[-2, 2, 3],[1, 2, 3]])
-    #numpy.testing.assert_array_equal(res1, [[1, 2, -4],[1, 2, 3],[-2, 2, 3]])
-    #numpy.testing.assert_array_equal(res2, [[1, -4, 3],[-3, 2, 3],[1, 2, 3]])
-
-    print(projpartners.create_pp_matrix(s, p1, M1))
-
-test_create_pp_matrix()
+    numpy.testing.assert_array_equal(res0, [[1, -3, 3],[-2, 2, 3],[1, 2, 3]])
+    numpy.testing.assert_array_equal(res1, [[1, -3, -4],[-2, 2, 3],[-2, 2, 3]])
+    numpy.testing.assert_array_equal(res2, [[1, -4, 3],[-3, 2, 3],[1, 2, 3]])
 
 def test_create_neye_matrix():
     res0 = projpartners.create_neye_matrix([])
