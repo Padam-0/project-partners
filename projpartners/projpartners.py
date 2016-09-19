@@ -287,7 +287,7 @@ def main():
                               "coordinator: ")
     """
 
-    unit_coordinator = 'Steve Jobs'
+    unit_coordinator = 'peter.adam'
 
     for i in teams:
         tm1 = find_member_name(i[0], student_info)
@@ -308,12 +308,11 @@ def main():
         for recipient in i:
             recipients.append(recipient + "@ucdconnect.ie")
         #send_email(recipients, team_subject, team_message)
-        print(team_message)
 
     uc_subject = "Teams for __ assignment"
     uc_message = "Hi uc_name, ..."
 
-    #send_email(unit_coordinator, uc_subject, uc_message)
+    send_email(unit_coordinator, uc_subject, uc_message)
 
 
 

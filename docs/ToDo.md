@@ -15,10 +15,11 @@ solution, then merge back into master when finished.
 
 # In progress:  
 * Rewrite matrix addition / previous pairs - Peter
-* Obscure password entry from command line - Peter  
 * Deal with odd numbered matrix - Peter
 
 # Complete:  
+* Obscure password entry from command line - Not possible, but getpass
+works when run from the command line.
 * Matching Engine - Done 19-09-16
 * Change file paths to use os.path.join(dirname, filename) so it will 
     work on windows and unix - Done 18-09-16  
