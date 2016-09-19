@@ -233,17 +233,29 @@ def row_counter(M, ind):
         di0.append(count_zeros)
     return di0
 
+def find_leftover(teams, student_info):
+    people_in_teams = []
+    all_people = []
+    for i in range(len(teams)):
+        for j in range(2):
+            people_in_teams.append(teams[i][j])
+    for i in range(len(student_info)):
+        all_people.append(student_info[i][0])
+    for i in range(len(all_people)):
+        if all_people[i] not in people_in_teams:
+            return all_people[i]
+
+
 def main():
-    """
+
     # This will be used when talking to the user. For now, use a default
     input_file = input("What is the name of the .txt file containing student "
                        "information?  ")
     student_info = openfile(getfilename(input_file))
-    """
 
-    student_info = openfile(getfilename('sample-input'))
+    # student_info = openfile(getfilename('sample-input'))
 
-    """
+
     # This will be used when talking to the user. For now, use a default
     pp = 'N'
     if previous_partners() == 'Y':
@@ -252,33 +264,28 @@ def main():
             "information?  ")
         prev_partners_info = openfile(getfilename(input_file1))
         pp = 'Y'
-    """
-    prev_partners_info = openfile(getfilename('sample-pp'))
+
+    # prev_partners_info = openfile(getfilename('sample-pp'))
 
     # Create diversity matrices for each of our 4 criteria
-    cbM = create_criteria_matrix(student_info, "CountryOfBirth")
-    ugM = create_criteria_matrix(student_info, "UnderGrad")
-    ieM = create_criteria_matrix(student_info, "IndustryExp")
-    inM = create_criteria_matrix(student_info, "Industry")
+    M = create_criteria_matrix(student_info, "CountryOfBirth")
+    for i in criteria_list[1:]:
+        M += create_criteria_matrix(student_info, i)
 
-    # Sum diversity matrices
-    frM = cbM + ugM + ieM + inM
     # Create negative identity matrix
     neM = create_neye_matrix(student_info)
 
-    pp = 'Y'
     if pp == 'Y':
         # Adjust cumulative diversity matrix based on previous partners
-        ppM = create_pp_matrix(student_info, prev_partners_info, frM)
+        ppM = create_pp_matrix(student_info, prev_partners_info, M)
         # Add negative identity matrix to remove self-matching
         fM = ppM + neM
     else:
         # Add negative identity matrix to remove self-matching
-        fM = frM + neM
+        fM = M + neM
 
-
-    ppM = create_pp_matrix(student_info, prev_partners_info, frM)
-    fM = ppM + neM
+    #ppM = create_pp_matrix(student_info, prev_partners_info, M)
+    #fM = ppM + neM
 
     teams = matching_engine(fM, student_info)
 
@@ -286,8 +293,26 @@ def main():
     unit_coordinator = input("Please enter the email prefix of the unit "
                               "coordinator: ")
     """
-
     unit_coordinator = 'peter.adam'
+
+
+    if len(teams) != len(student_info):
+        leftover = find_leftover(teams, student_info)
+
+        print("There were an odd number of applicants, as such #divesity was "
+              "unable to find a match for " + leftover)
+
+        leftover_subject = "Unable to place you in a team for ___ assignment"
+        leftover_message = "Hi " + find_member_name(leftover, student_info) +\
+                           ",\n\nUnfortunately, due to an odd number of " \
+                           "applicants, we were unable to place you in a team" \
+                           " for this assignment :( You can try searching for" \
+                           " a partner on Slack, Whatsapp, or by emailing " \
+                           "the unit coordinator at " + unit_coordinator + \
+                           "@ucdconnect.ie\n\n#autodiverse apologises, " \
+                           "and hopes you find a partner soon!"
+        leftover_email = leftover + "@ucdconnect.ie"
+        # send_email(leftover_email, team_subject, team_message)
 
     for i in teams:
         tm1 = find_member_name(i[0], student_info)
@@ -312,7 +337,7 @@ def main():
     uc_subject = "Teams for __ assignment"
     uc_message = "Hi uc_name, ..."
 
-    send_email(unit_coordinator, uc_subject, uc_message)
+    #send_email(unit_coordinator, uc_subject, uc_message)
 
 
 

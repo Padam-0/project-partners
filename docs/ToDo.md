@@ -12,14 +12,16 @@ solution, then merge back into master when finished.
     - Update README with function and module descriptions  
     - Copy docstrings for functions and modules from ^  
 * What about teams larger than 2?
+* Should previous pairs be removed completely?
 
 # In progress:  
-* Rewrite matrix addition / previous pairs - Peter
-* Deal with odd numbered matrix - Peter
+
 
 # Complete:  
+* Deal with odd numbered matrix - Done 19-09-16
 * Obscure password entry from command line - Not possible, but getpass
 works when run from the command line.
+* Rewrite matrix addition / previous pairs - Done 19-09-16
 * Matching Engine - Done 19-09-16
 * Change file paths to use os.path.join(dirname, filename) so it will 
     work on windows and unix - Done 18-09-16  

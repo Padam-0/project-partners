@@ -6,3 +6,4 @@ mark.doyle.4 Mark Doyle Ireland CompSci N NA
 eoin.carroll Eoin Carroll Ireland Engineering Y IT
 bobby.reardon Bobby Reardon Ireland Stats N NA
 kieron.ellis Kieron Ellis Ireland Commerce N NA
+steve.jobs Steve JObs America CompSci Y Tech
