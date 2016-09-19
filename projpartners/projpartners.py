@@ -6,6 +6,7 @@ try:
     import numpy as np
     import os
     import re
+    import random
 except ImportError as import_err:
     print(import_err)
     print("Unable to import required libraries. Please check installation of "
@@ -184,20 +185,53 @@ def find_member_name(email_prefix, student_list):
     # What if names can't be found?
     return " ".join([first_name, last_name])
 
+def matching_engine(M, s_info):
+    teams = []
+    array_length = len(M)
+    if array_length % 2 != 0:
+        array_length = int((array_length - 1) / 2)
+    else:
+        array_length = int(array_length / 2)
 
-def matching_engine(M):
-    li = []
-    diT = {}
-    di0 = {}
+    for i in range(array_length):
+        if sum(row_counter(M, 0)) > 0:
+            match1, match2 = matrix_reduction(M, 0)
+        elif sum(row_counter(M, 1)) > 0:
+            match1, match2 = matrix_reduction(M, 1)
+        elif sum(row_counter(M, 2)) > 0:
+            match1, match2 = matrix_reduction(M, 2)
+        else:
+            match1, match2 = matrix_reduction(M, 3)
+
+        M[match1,] = -1 * abs(M[match1,]) - 1
+        M[match2,] = -1 * abs(M[match2,]) - 1
+        M[:, match1] = -1 * abs(M[:, match1]) - 1
+        M[:, match2] = -1 * abs(M[:, match2]) - 1
+
+        match1 = s_info[match1][0]
+        match2 = s_info[match2][0]
+        teams.append([match1, match2])
+    return teams
+
+
+def matrix_reduction(M, ind):
+    li0 = row_counter(M, ind)
+    num_of_ind = li0.index(max(li0))
+    rand_index = random.randint(0, max(li0)-1)
+    Q = np.ndarray.tolist(M[num_of_ind])
+    for z in range(rand_index):
+        replace_index = Q.index(float(ind))
+        Q[replace_index] = -1
+    partner_index = Q.index(float(ind))
+    return num_of_ind, partner_index
+
+def row_counter(M, ind):
+    di0 = []
     for i in range(len(M)):
         row = M[i]
-        sum_row = (row >= 0).sum()
-        count_zeros = np.count_nonzero(row == 0)
-        diT[i] = sum_row
-        di0[i] = count_zeros
-    return diT, di0
-    # return li
-
+        count_zeros = np.count_nonzero(row == ind)
+        di0.append(count_zeros)
+    return di0
 
 def main():
     """
@@ -232,7 +266,7 @@ def main():
     # Create negative identity matrix
     neM = create_neye_matrix(student_info)
 
-    """
+    pp = 'Y'
     if pp == 'Y':
         # Adjust cumulative diversity matrix based on previous partners
         ppM = create_pp_matrix(student_info, prev_partners_info, frM)
@@ -241,19 +275,19 @@ def main():
     else:
         # Add negative identity matrix to remove self-matching
         fM = frM + neM
-    """
+
 
     ppM = create_pp_matrix(student_info, prev_partners_info, frM)
     fM = ppM + neM
 
-    print(matching_engine(fM))
+    teams = matching_engine(fM, student_info)
 
     """
     unit_coordinator = input("Please enter the email prefix of the unit "
                               "coordinator: ")
+    """
 
-    # Return list of teams here
-    teams = [['peter.adam', 'peter.adam']]
+    unit_coordinator = 'Steve Jobs'
 
     for i in teams:
         tm1 = find_member_name(i[0], student_info)
@@ -280,7 +314,7 @@ def main():
     uc_message = "Hi uc_name, ..."
 
     #send_email(unit_coordinator, uc_subject, uc_message)
-    """
+
 
 
 if __name__ == '__main__':
